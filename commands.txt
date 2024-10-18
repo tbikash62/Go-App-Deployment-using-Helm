@@ -1,0 +1,34 @@
+helm create go-app
+docker build --build-arg PORT=9090 -t app .
+docker run -d -p 8080:8080 -e PORT=8080 app 
+docker tag app:latest tbikash62/app:latest
+docker run -d -p 9091:9090 -e PORT=9090 tbikash62/app
+docker pull tbikash62/app
+docker push tbikash62/app:latest
+docker login -u t.bikash62@gmail.com
+kubectl port-forward service/go-app-service 30090:9091
+http://localhost:9090/
+docker build -t app .  
+docker run -d -p 9090:9090 -e PORT=9090 app  
+
+minikube dashboard
+
+helm create go-app
+helm lint go-app
+helm install --debug go-app --dry-run
+helm install go-app .
+helm list
+kubectl get svc
+
+
+Started getting Bugs --> Redeploy
+----------
+docker build -t tbikash62/app:0.0.2 .
+docker run -d -p 9091:9090 -e PORT=9090 tbikash62/app:0.0.2
+docker tag app:latest tbikash62/app:0.0.1
+docker push tbikash62/app:0.0.2 
+kubectl port-forward service/go-app-service 30090:9091
+
+
+_--------
+
